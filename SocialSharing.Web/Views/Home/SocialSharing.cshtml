@@ -1,0 +1,85 @@
+﻿@using SocialSharing.Model;
+
+@{
+    ViewBag.Title = "Social Sharing Result";
+    MvSocialSharingResponse socialSharingResponse = new MvSocialSharingResponse { };
+    socialSharingResponse.FacebookPagePost = ViewBag?.facebookPagePost;
+    socialSharingResponse.TwitterTweet = ViewBag?.twitterTweet;
+    socialSharingResponse.LinkedInPost = ViewBag?.linkedInPost;
+}
+
+<div class="jumbotron">
+    <h1>Social Sharing Result</h1>
+    <p class="lead">Social Sharing InProgress. Please wait until we are done!</p>
+    <p class="lead">You can find your shared posts below!</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            if (socialSharingResponse.FacebookPagePost != null && socialSharingResponse.FacebookPagePost.Count > 0)
+            {
+                <h4>Facebook Sharing Info</h4>
+                <div class="card">
+                    <div class="card-body">
+                        @foreach (var post in socialSharingResponse.FacebookPagePost)
+                        {
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Id: @post.id</li>
+                                <li class="list-group-item">Message: @post.message</li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            if (socialSharingResponse.TwitterTweet != null && socialSharingResponse.TwitterTweet.Count > 0)
+            {
+                <h4>Twitter Sharing Info</h4>
+                <div class="card">
+                    <div class="card-body">
+                        @foreach (var tweet in socialSharingResponse.TwitterTweet)
+                        {
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"> Id: @tweet.Id</li>
+                                <li class="list-group-item">Text: @tweet.Text</li>
+                                <li class="list-group-item">User: @tweet.UserName</li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            if (socialSharingResponse.LinkedInPost != null && socialSharingResponse.LinkedInPost.Count > 0)
+            {
+                <h4>LinkedIn Sharing Info</h4>
+                <div class="card">
+                    <div class="card-body">
+                        @foreach (var lPost in socialSharingResponse.LinkedInPost)
+                        {
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Id: @lPost.Id</li>
+                                <li class="list-group-item">Text: @lPost.Text</li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to Home", "Index")
+</p>

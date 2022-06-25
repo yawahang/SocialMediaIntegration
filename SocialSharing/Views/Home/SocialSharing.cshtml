@@ -1,0 +1,119 @@
+﻿@using SocialSharing.Models
+
+@{
+    ViewBag.Title = "Social Sharing Result";
+    MvFacebookResponse facebookResponse = ViewBag?.facebookResponse;
+    MvTwitterResponse twitterResponse = ViewBag?.twitterResponse;
+    MvLinkedInResponse linkedInResponse = ViewBag?.linkedInResponse;
+}
+
+<div class="jumbotron">
+    <h1>Social Sharing Result</h1>
+    <p class="lead">Social Sharing InProgress. Please wait until we are done!</p>
+    <p class="lead">You can find your shared posts below!</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            <h4>Facebook Sharing Info</h4>
+            if (facebookResponse != null && !string.IsNullOrEmpty(facebookResponse.ToString()))
+            {
+                if (facebookResponse.PagePost.Count > 0)
+                {
+                    foreach (var post in facebookResponse.PagePost)
+                    {
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @post.id
+                            </dt>
+                            <dt>
+                                @post.message
+                            </dt>
+                        </dl>
+                    }
+                }
+                else
+                {
+                    <h4>There are no posts yet!</h4>
+                }
+            }
+            else
+            {
+                <h4>There are nothing to to show!</h4>
+            }
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            <h4>Twitter Sharing Info</h4>
+            if (twitterResponse != null && !string.IsNullOrEmpty(twitterResponse.ToString()))
+            {
+                if (twitterResponse.Tweets.Count > 0)
+                {
+                    foreach (var tweet in twitterResponse.Tweets)
+                    {
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @tweet.ID
+                            </dt>
+                            <dt>
+                                @tweet.Text
+                            </dt>
+                            <dt>
+                                @tweet.CreatedAt
+                            </dt>
+                        </dl>
+                    }
+                }
+                else
+                {
+                    <h4>There are no tweets yet!</h4>
+                }
+            }
+            else
+            {
+                <h4>There are nothing to to show!</h4>
+            }
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            <h4>LinkedIn Sharing Info</h4>
+            if (linkedInResponse != null && !string.IsNullOrEmpty(linkedInResponse.ToString()))
+            {
+                if (linkedInResponse.LinkedInPost.Count > 0)
+                {
+                    foreach (var lPost in linkedInResponse.LinkedInPost)
+                    {
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @lPost.Id
+                            </dt>
+                            <dt>
+                                @lPost.Description
+                            </dt>
+                        </dl>
+                    }
+                }
+                else
+                {
+                    <h4>There are no posts yet!</h4>
+                }
+            }
+            else
+            {
+                <h4>There are nothing to to show!</h4>
+            }
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to Home", "Index")
+</p>

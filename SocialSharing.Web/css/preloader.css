@@ -1,0 +1,152 @@
+﻿.modal {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.preloader-modal-dialog {
+    width: 100vw;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+    position: relative;
+    max-width: 100vw;
+}
+
+.prelaoder-modal-content {
+    position: absolute;
+    background: #ffffff;
+    box-shadow: 0px 0px 35px -10px #000000;
+    height: 215px;
+    width: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.preloader-modal-body {
+    height: 100%;
+    z-index: 1000;
+    border-radius: 10px;
+}
+.preloader-modal-body .preloader-loading-wrapper p {
+    color: #474747;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    line-height: 1.5em;
+}
+.preloader-loading-wrapper {
+    display: block;
+    margin: 0px auto;
+    height: 100%;
+    /*width: 97px;*/
+}
+
+.preloader-loading-wrapper .cssload-loading {
+    color: #337ab7;
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.preloader-loading-wrapper .cssload-loading div {
+    transform-origin: 40px 40px;
+    animation: cssload-loading-ani1 1.2s linear infinite;
+}
+
+.preloader-loading-wrapper .cssload-loading div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 37px;
+    width: 5px;
+    height: 11px;
+    border-radius: 20%;
+    background: #337ab7;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(1) {
+    transform: rotate(0deg);
+    animation-delay: -1.1s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(2) {
+    transform: rotate(30deg);
+    animation-delay: -1s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(3) {
+    transform: rotate(60deg);
+    animation-delay: -0.9s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(4) {
+    transform: rotate(90deg);
+    animation-delay: -0.8s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(5) {
+    transform: rotate(120deg);
+    animation-delay: -0.7s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(6) {
+    transform: rotate(150deg);
+    animation-delay: -0.6s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(7) {
+    transform: rotate(180deg);
+    animation-delay: -0.5s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(8) {
+    transform: rotate(210deg);
+    animation-delay: -0.4s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(9) {
+    transform: rotate(240deg);
+    animation-delay: -0.3s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(10) {
+    transform: rotate(270deg);
+    animation-delay: -0.2s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(11) {
+    transform: rotate(300deg);
+    animation-delay: -0.1s;
+}
+
+.preloader-loading-wrapper .cssload-loading div:nth-child(12) {
+    transform: rotate(330deg);
+    animation-delay: 0s;
+}
+
+@keyframes cssload-loading-ani1 {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .prelaoder-modal-content {
+        width: 300px;
+    }
+    .preloader-modal-body .preloader-loading-wrapper p {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .prelaoder-modal-content {
+        width: 250px;
+    }
+}

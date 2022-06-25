@@ -1,0 +1,165 @@
+﻿@model SocialSharing.Model.MvSocialSharing
+
+@{
+    ViewBag.Title = "Social Sharing";
+    var clearCache = DateTime.Now.ToString("yyyyMMddHHmmss");
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+@*<script src="/Scripts/SocialSharing/module.js?v=@clearCache"></script>
+    <script src="/Scripts/SocialSharing/sociaSharingController.js?v=@clearCache"></script>
+    <script src="/Scripts/SocialSharing/sociaSharingServices.js?v=@clearCache"></script>*@
+<link href="~/css/preloader.css" rel="stylesheet" />
+
+<section class="whole_taker boostchamp_comunity_wrapper" ng-app="socialSharing" ng-controller="socialSharingontroller as vm">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Social Sharing</h1>
+            <p class="lead">Social sharing for Facebook, Twitter and LinkedIn.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" name="socialShareForm" enctype="multipart/form-data" class="comment_thought" ng-submit="vm.socialShare()">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="bodyContent">Enter Something To Share</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" rows="5" data-val="true" data-val-required="Dit is een verplicht veld." id="bodyContent" name="bodyContent" aria-hidden="true" ng-model="vm.ssModel.Text" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="bodyContent">Picture Link (Facebook)</label>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-2" id="PictureLink" name="PictureLink" type="text" ng-model="vm.ssModel.PictureLink" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="bodyContent">Picture Name (Facebook)</label>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-2" id="PictureName" name="PictureName" type="text" ng-model="vm.ssModel.PictureName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="bodyContent">Picture Description (Facebook)</label>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-2" id="PictureDescription" name="PictureDescription" type="text" ng-model="vm.ssModel.PictureDescription" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="bodyContent">Select Image (For Twitter)</label>
+                            <div class="col-md-10">
+                                <input class="form-control col-md-2" id="Image" name="Image" type="file" ng-model="vm.ssModel.Image" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container" style="margin-left: 111px;">
+                        <div class="row">
+                            <div class="col-md-12 bg-light text-left">
+                                <input type="submit" id="shareTo" value="Share To Facebook" class="btn btn-primary" />
+                                <input type="submit" id="shareTo" value="Share To Twitter" class="btn btn-primary" />
+                                <input type="submit" id="shareTo" value="Share To LinkedIn" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="errorModel" aria-hidden="true" data-backdrop="static" data-keyboard="false" role="dialog" style="background: rgba(0, 0, 0, 0.5); z-index: 9;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red"><strong>Error</strong></h5>
+            </div>
+            <div class="modal-body">
+                Sorry, something went wrong with the quotation request. Please try again..
+            </div>
+            <div class="modal-footer">
+                <button onclick="$('#errorModel').modal('hide');" id="okayError" type="button" class="btn btn-default" style="padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: normal; border: 1px solid transparent; border-radius: 4px;  background: #428bca !important; color: #FFF !important; z-index: 9;">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="loader" role="dialog" aria-hidden="true">
+    <div class="modal-dialog preloader-modal-dialog">
+        <div class="modal-content prelaoder-modal-content">
+            <div class="modal-body text-center preloader-modal-body">
+                <div class="preloader-loading-wrapper">
+                    <div class="cssload-loading"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    <p>We are processing your data.<br>Sometimes this will take time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ssApp = angular.module("socialSharing", []);
+    ssApp.controller("socialSharingontroller", ['$scope', function ($scope, $http) {
+        var vm = this;
+        vm.ssModel = [];
+        vm.socialShare = function () {
+            var model = vm.ssModel;
+            var shareTo = document.getElementById("shareTo").value;
+
+            var data = new FormData();
+            data.append("Text", model.Text);
+            data.append("PictureLink", model.PictureLink);
+            data.append("PictureName", model.PictureName);
+            data.append("PictureDescription", model.PictureDescription);
+            data.append("ShareTo", shareTo);
+            if ($("#Image").get(0)) {
+                data.append("Image", $("#Image").get(0).files[0]);
+            }
+            InitializeLoader()
+            debugger;
+            ssService.socialShare(data).then(function (response) {
+                debugger;
+                //if (response.data.Status == "success") {
+                //    vm.ssModel = [];
+                //    //location.href = response.data.ReturnUrl;
+                //    CloseLoader();
+                //}
+                //else if (resp.data.Status == "error") {
+                //    CloseLoader();
+                //    $("#errorModel").modal('show');
+                //}
+            }, function (err) {
+                console.error('Controller: Error', err);
+            });
+        };
+
+    }]);
+
+
+    ssApp.factory("ssService", function ($http) {
+        return {
+            socialShare: function (data) {
+                return $http.post("/Home/SocialShareForm", data, {
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                });
+            },
+        };
+    });
+
+    var injector = angular.injector(['ng', 'socialSharing']);
+    var ssService = injector.get('ssService');
+
+    function InitializeLoader() {
+        $("#loader").modal({
+            backdrop: "static", //remove ability to close modal with click
+            keyboard: false, //remove option to close with keyboard
+            show: true //Display loader!
+        });
+    }
+
+    function CloseLoader() {
+        $("#loader").modal("hide");
+    }
+</script>
