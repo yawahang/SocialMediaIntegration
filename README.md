@@ -1,5 +1,5 @@
 # SocialSharing
-  Social Media Sharing (LinkedIn, Facebook, Twitter)
+  Social Media Integration (LinkedIn, Facebook, Twitter)
 
 # Technologies
   * .Net Framework 4.7.2
